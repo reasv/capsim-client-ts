@@ -1,19 +1,12 @@
-import { useState } from 'react'
-import { HashRouter } from 'react-router-dom'
-import './index.css'
-import { Button } from "@/components/ui/button"
-function App() {
-  const [count, setCount] = useState(0)
+import Sidebar from './components/ui/sidebar'
 
+import './index.css'
+function App() {
   return (
     <>
-    <div>
-      <Button onClick={() => setCount(count + 1)}>
-        Clicked {count} times
-      </Button>
-      <HashRouter>
-      </HashRouter>
-      </div>
+    <div className="flex bg-gray-700 text-primary-foreground h-screen">
+    <Sidebar></Sidebar>
+    </div>
     </>
   )
 }
