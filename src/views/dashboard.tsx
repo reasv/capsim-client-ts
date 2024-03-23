@@ -43,6 +43,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { CardsMetric } from "@/components/ui/metric"
+import { BarchartCard } from "@/components/ui/barchart"
 
 export function Dashboard() {
   return (
@@ -441,6 +443,28 @@ export function Dashboard() {
               </div>
             </CardContent>
           </Card>
+          <CardsMetric />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+                <Card className="col-span-4">
+                  <CardHeader>
+                    <CardTitle>Overview</CardTitle>
+                  </CardHeader>
+                  <CardContent className="pl-2">
+                  <BarchartCard />
+                  </CardContent>
+                </Card>
+                <Card className="col-span-3">
+                  <CardHeader>
+                    <CardTitle>Recent Sales</CardTitle>
+                    <CardDescription>
+                      You made 265 sales this month.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                  <CardsMetric />
+                  </CardContent>
+                </Card>
+              </div>
         </div>
       </main>
     </div>
