@@ -1,12 +1,17 @@
-import Sidebar from './components/ui/sidebar'
+import { HashRouter } from 'react-router-dom'
+import { ThemeProvider } from "@/components/theme-provider"
+
 
 import './index.css'
+import { Dashboard } from './views/dashboard'
 function App() {
   return (
     <>
-    <div className="flex bg-gray-700 text-primary-foreground h-screen">
-    <Sidebar></Sidebar>
-    </div>
+    <HashRouter>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <Dashboard />
+      </ThemeProvider>
+    </HashRouter>
     </>
   )
 }
