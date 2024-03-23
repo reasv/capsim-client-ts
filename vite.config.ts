@@ -9,7 +9,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // Map "components" to the actual path
-      '@/*': path.resolve(__dirname, './src/'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
 })
