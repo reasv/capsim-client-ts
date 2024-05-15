@@ -29,7 +29,7 @@ type Status = {
   label: string
 }
 
-export function SelectAsset() {
+export function SelectAsset({ setStatus }: {setStatus: (status: string) => void}){
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
@@ -39,6 +39,10 @@ export function SelectAsset() {
     }
   )
 
+  function handleStatusChange(status: Status | null) {
+    setSelectedStatus(status)
+    setStatus(status ? status.value : "VTI")
+  }
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -48,7 +52,7 @@ export function SelectAsset() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0" align="start">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <StatusList setOpen={setOpen} setSelectedStatus={handleStatusChange} />
         </PopoverContent>
       </Popover>
     )
@@ -63,7 +67,7 @@ export function SelectAsset() {
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <StatusList setOpen={setOpen} setSelectedStatus={handleStatusChange} />
         </div>
       </DrawerContent>
     </Drawer>
