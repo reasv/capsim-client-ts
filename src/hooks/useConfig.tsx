@@ -8,7 +8,7 @@ const ConfigContext = createContext<Config | undefined>(undefined);
 
 export const ConfigProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const config: Config = {
-    apiUrl: process.env.REACT_APP_API_URL || ''
+    apiUrl: import.meta.env.VITE_REACT_APP_API_URL || ''
   };
 
   return (
