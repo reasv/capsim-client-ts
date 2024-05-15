@@ -45,7 +45,7 @@ import {
 } from "@/components/ui/table"
 import { CardsMetric } from "@/components/ui/metric"
 import { BarchartCard } from "@/components/ui/barchart"
-import { SelectAsset } from "./portfolioForm"
+import { PortfolioForm } from "./portfolioForm"
 
 export function Dashboard() {
   return (
@@ -171,7 +171,7 @@ export function Dashboard() {
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div>
-          <SelectAsset></SelectAsset>
+          <PortfolioForm></PortfolioForm>
         </div>
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           
