@@ -6,45 +6,6 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { PortfolioParams, usePortfolioBacktest } from "@/hooks/backtestAPI"
 
-export function NumberInput(
-  {id, label, value, maxValue, onNewValue}: {id: string, label: string, value: number, maxValue?: number, onNewValue: (value: number) => void}
-) {
-  function onInput(event: React.FormEvent<HTMLInputElement>) {
-    const value = parseFloat(event.currentTarget.value)
-    if (isNaN(value)) {
-      return
-    }
-    if (maxValue && value > maxValue) {
-      onNewValue(maxValue)
-      return
-    }
-    onNewValue(value)
-  }
-  return (
-    <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Input type="number" id={id} value={value} onInput={onInput}/>
-    </div>
-  )
-}
-
-export function TextInput(
-  {id, label, value, maxLength, onNewValue}: {id: string, label: string, value: string, maxLength: number, onNewValue: (value: string) => void}
-) {
-  function onInput(event: React.FormEvent<HTMLInputElement>) {
-    if (event.currentTarget.value.length > maxLength) {
-      return
-    }
-    onNewValue(event.currentTarget.value)
-  }
-  return (
-    <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
-      <Label htmlFor={id}>{label}</Label>
-      <Input type="text" id={id} value={value} maxLength={maxLength} onInput={onInput}/>
-    </div>
-  )
-}
-
 export function PortfolioForm() {
   const [asset, setAsset] = React.useState<string>("VTI")
   const [portfolioLabel, setPortfolioLabel] = React.useState<string>("My Portfolio")
@@ -89,6 +50,45 @@ export function PortfolioForm() {
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
       <TextInput id="start_date" label="Start Date" value={startDate} maxLength={10} onNewValue={setStartDate} />
       <Button className="mt-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
+    </div>
+  )
+}
+
+export function NumberInput(
+  {id, label, value, maxValue, onNewValue}: {id: string, label: string, value: number, maxValue?: number, onNewValue: (value: number) => void}
+) {
+  function onInput(event: React.FormEvent<HTMLInputElement>) {
+    const value = parseFloat(event.currentTarget.value)
+    if (isNaN(value)) {
+      return
+    }
+    if (maxValue && value > maxValue) {
+      onNewValue(maxValue)
+      return
+    }
+    onNewValue(value)
+  }
+  return (
+    <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
+      <Label htmlFor={id}>{label}</Label>
+      <Input type="number" id={id} value={value} onInput={onInput}/>
+    </div>
+  )
+}
+
+export function TextInput(
+  {id, label, value, maxLength, onNewValue}: {id: string, label: string, value: string, maxLength: number, onNewValue: (value: string) => void}
+) {
+  function onInput(event: React.FormEvent<HTMLInputElement>) {
+    if (event.currentTarget.value.length > maxLength) {
+      return
+    }
+    onNewValue(event.currentTarget.value)
+  }
+  return (
+    <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
+      <Label htmlFor={id}>{label}</Label>
+      <Input type="text" id={id} value={value} maxLength={maxLength} onInput={onInput}/>
     </div>
   )
 }
