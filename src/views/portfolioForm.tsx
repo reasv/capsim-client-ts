@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { PortfolioParams, usePortfolioBacktest } from "@/hooks/backtestAPI"
+import { ChartCard } from "@/components/portfolio/chart"
 
 export function PortfolioForm() {
   const [asset, setAsset] = React.useState<string>("VTI")
@@ -27,9 +28,9 @@ export function PortfolioForm() {
     ticker: asset,
     start_date: startDate,
     initial_investment: initialInvestment,
-    dividend_tax: dividendTaxRate,
-    capital_gains_tax: capitalGainsTaxRate,
-    yearly_sale_percentage: yearlyWithdrawalRate,
+    dividend_tax: dividendTaxRate / 100,
+    capital_gains_tax: capitalGainsTaxRate / 100,
+    yearly_sale_percentage: yearlyWithdrawalRate / 100,
     name: portfolioLabel,
   }), [asset, startDate, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, portfolioLabel])
   const { simulatePortfolios, results, loading, error } = usePortfolioBacktest()
@@ -49,7 +50,12 @@ export function PortfolioForm() {
       <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
       <TextInput id="start_date" label="Start Date" value={startDate} maxLength={10} onNewValue={setStartDate} />
-      <Button className="mt-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
+      <Button className="mt-5 mb-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
+      {results && (
+        <div>
+          <ChartCard title={"Net worth"} description="Portfolio performance over time" portfolioResults={results} />
+        </div>
+      )}
     </div>
   )
 }

@@ -42,7 +42,7 @@ export const usePortfolioBacktest = (): UsePortfolioBacktestReturn => {
         portfolios,
       });
 
-      setResults(response.data);
+      setResults(response.data.results);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred');
     } finally {
