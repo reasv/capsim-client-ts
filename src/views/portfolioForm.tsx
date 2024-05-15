@@ -1,8 +1,10 @@
 "use client"
-import React from "react"
+import React, { useMemo } from "react"
 import { SelectAsset } from "@/components/portfolio/selectAsset"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { PortfolioParams, usePortfolioBacktest } from "@/hooks/backtestAPI"
 
 export function NumberInput(
   {id, label, value, maxValue, onNewValue}: {id: string, label: string, value: number, maxValue?: number, onNewValue: (value: number) => void}
@@ -59,6 +61,24 @@ export function PortfolioForm() {
       setPortfolioLabel(`100% ${asset} Portfolio`)
     }
   }, [asset])
+
+  const requestData: PortfolioParams = useMemo(() => ({
+    ticker: asset,
+    start_date: startDate,
+    initial_investment: initialInvestment,
+    dividend_tax: dividendTaxRate,
+    capital_gains_tax: capitalGainsTaxRate,
+    yearly_sale_percentage: yearlyWithdrawalRate,
+    name: portfolioLabel,
+  }), [asset, startDate, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, portfolioLabel])
+  const { simulatePortfolios, results, loading, error } = usePortfolioBacktest()
+  // print results to console
+  React.useEffect(() => {
+    if (results) {
+      console.log(results)
+    }
+  }, [results])
+
   return (
     <div>
       <SelectAsset setStatus={setAsset}/>
@@ -68,6 +88,7 @@ export function PortfolioForm() {
       <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
       <TextInput id="start_date" label="Start Date" value={startDate} maxLength={10} onNewValue={setStartDate} />
+      <Button className="mt-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
     </div>
   )
 }
