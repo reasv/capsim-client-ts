@@ -10,7 +10,7 @@ import { ChartCard } from "@/components/portfolio/chart"
 export function PortfolioForm() {
   const [asset, setAsset] = React.useState<string>("VTI")
   const [portfolioLabel, setPortfolioLabel] = React.useState<string>("My Portfolio")
-  const [initialInvestment, setInitialInvestment] = React.useState<number>(10000)
+  const [initialInvestment, setInitialInvestment] = React.useState<number>(1000000)
   const [dividendTaxRate, setDividendTaxRate] = React.useState<number>(26)
   const [capitalGainsTaxRate, setCapitalGainsTaxRate] = React.useState<number>(26)
   const [yearlyWithdrawalRate, setYearlyWithdrawalRate] = React.useState<number>(4)
@@ -45,7 +45,7 @@ export function PortfolioForm() {
     <div>
       <SelectAsset setStatus={setAsset}/>
       <TextInput id="portfolio_label" label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
-      <NumberInput id="initial_investment" label={`Initial Investment ${initialInvestment}`} value={initialInvestment} onNewValue={setInitialInvestment} />
+      <NumberInput id="initial_investment" label={`Initial Investment`} value={initialInvestment} onNewValue={setInitialInvestment} />
       <NumberInput id="dividend_tax_rate" maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
       <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
@@ -53,7 +53,10 @@ export function PortfolioForm() {
       <Button className="mt-5 mb-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
       {results && (
         <div>
-          <ChartCard title={"Net worth"} description="Portfolio performance over time" portfolioResults={results} />
+          <ChartCard syncId="port1" round={true} title={"Price"} description="Price over time of the underlying asset(s), expressed in % of initial price" field_name="price" portfolioResult={results[0]} />
+          <ChartCard syncId="port1" round={false} title={"Inflation Index"} description="Your chosen measure of inflation" field_name="raw_cpi" portfolioResult={results[0]} />
+          <ChartCard syncId="port1" round={true} title={"Net worth"} description="Total value of your portfolio over time, adjusted for inflation" field_name="infl. adj. portfolio value" portfolioResult={results[0]} />
+          <ChartCard syncId="port1" round={true} title={"Monthly Withdrawals"} description="Amount you withdraw from your portfolio *per month*, adjusted for inflation" field_name="infl. adj. monthly income" yearly={true} portfolioResult={results[0]} />
         </div>
       )}
     </div>
