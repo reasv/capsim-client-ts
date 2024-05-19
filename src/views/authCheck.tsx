@@ -2,8 +2,8 @@
 import React from "react"
 import { Button } from "@/components/ui/button"
 import useAuthCheck from "@/hooks/useAuthCheck"
-import { TextInput } from "./portfolioForm"
 import { AdminDashboard } from "./adminDashboard"
+import { TextInput } from "@/components/portfolio/textInput"
 
 export function AuthCheck() {
     const { isAuthorized, error, password, checkPassword } = useAuthCheck();
