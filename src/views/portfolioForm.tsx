@@ -26,7 +26,7 @@ export function PortfolioForm() {
 
   const requestData: PortfolioParams = useMemo(() => ({
     ticker: asset,
-    start_date: "2001-01-01",
+    start_date: null,
     initial_investment: initialInvestment,
     dividend_tax: dividendTaxRate / 100,
     capital_gains_tax: capitalGainsTaxRate / 100,

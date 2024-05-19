@@ -4,7 +4,7 @@ import { useConfig } from './useConfig'
 
 export interface PortfolioParams {
   ticker: string
-  start_date: string
+  start_date: string | null
   initial_investment: number
   dividend_tax: number
   capital_gains_tax: number
