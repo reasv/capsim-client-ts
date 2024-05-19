@@ -48,9 +48,6 @@ export function PortfolioForm() {
       <NumberInput id="dividend_tax_rate" maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
       <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
-      {
-      //<TextInput id="start_date" label="Start Date" value={startDate} maxLength={10} onNewValue={setStartDate} />
-      }
       <Button className="mt-5 mb-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
       {loading && <p className="mb-5">Loading...</p>}
       {error && <p className="mb-5">Error: {error}</p>}
@@ -70,7 +67,14 @@ export function PortfolioForm() {
 }
 
 export function NumberInput(
-  {id, label, value, maxValue, onNewValue}: {id: string, label: string, value: number, maxValue?: number, onNewValue: (value: number) => void}
+  {id, label, value, maxValue, onNewValue}
+  : {
+    id: string, 
+    label: string,
+    value: number,
+    maxValue?: number,
+    onNewValue: (value: number) => void
+  }
 ) {
   function onInput(event: React.FormEvent<HTMLInputElement>) {
     const value = parseFloat(event.currentTarget.value)
@@ -92,7 +96,14 @@ export function NumberInput(
 }
 
 export function TextInput(
-  {id, label, value, maxLength, onNewValue}: {id: string, label: string, value: string, maxLength: number, onNewValue: (value: string) => void}
+  {id, label, value, maxLength, onNewValue}:
+  {
+    id: string,
+    label: string,
+    value: string,
+    maxLength: number,
+    onNewValue: (value: string) => void
+  }
 ) {
   function onInput(event: React.FormEvent<HTMLInputElement>) {
     if (event.currentTarget.value.length > maxLength) {
