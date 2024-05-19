@@ -6,7 +6,7 @@ import './index.css'
 import { Layout } from './views/layout'
 import { PortfolioForm } from './views/portfolioForm'
 import { AuthCheck } from './views/authCheck'
-import { AdminDashboard } from './views/adminDashboard'
+
 function App() {
   return (
     <HashRouter>
