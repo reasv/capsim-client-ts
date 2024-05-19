@@ -1,18 +1,36 @@
-import { HashRouter } from 'react-router-dom'
+import { HashRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from "@/components/theme-provider"
 
 
 import './index.css'
-import { Dashboard } from './views/dashboard'
+import { Layout } from './views/layout'
+import { PortfolioForm } from './views/portfolioForm'
+import { AuthCheck } from './views/authCheck'
+import { AdminDashboard } from './views/adminDashboard'
 function App() {
   return (
-    <>
     <HashRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <Dashboard />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <PortfolioForm />
+              </Layout>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <Layout>
+                <AuthCheck/>
+              </Layout>
+            }
+          />
+        </Routes>
       </ThemeProvider>
     </HashRouter>
-    </>
   )
 }
 

@@ -3,8 +3,9 @@ import React from "react"
 import { Button } from "@/components/ui/button"
 import useAuthCheck from "@/hooks/useAuthCheck"
 import { TextInput } from "./portfolioForm"
+import { AdminDashboard } from "./adminDashboard"
 
-export function AuthCheck({children}: {children: React.ReactNode}) {
+export function AuthCheck() {
     const { isAuthorized, error, password, checkPassword } = useAuthCheck();
     const [inputPassword, setPassword] = React.useState<string>("")
     return (
@@ -24,15 +25,8 @@ export function AuthCheck({children}: {children: React.ReactNode}) {
                     {error && <p>Error: {error}</p>}
                 </div>
             </>)}
-            {isAuthorized === true && (
-                <>
-                    <div>
-                        <h1>Admin Panel</h1>
-                        <p>Password: {password}</p>
-
-                    </div>
-                    {children}
-                </>
+            {isAuthorized === true && password && (
+                <AdminDashboard adminPassword={password} />
             )}
         </div>
     )
