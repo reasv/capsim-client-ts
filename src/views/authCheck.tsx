@@ -10,8 +10,7 @@ export function AuthCheck() {
     const [inputPassword, setPassword] = React.useState<string>("")
     return (
         <div>
-            {isAuthorized === null && <p>Loading...</p>}
-            {isAuthorized === false && (<>
+            {!isAuthorized && (<>
                 <TextInput
                     id="password"
                     label="Password"
@@ -20,7 +19,7 @@ export function AuthCheck() {
                     type="password"
                     onNewValue={setPassword}
                 />
-                <Button onClick={() => checkPassword(inputPassword)}>Login</Button>
+                <Button className="mt-4" onClick={() => checkPassword(inputPassword)}>Login</Button>
                 <div className="mt-4">
                     {error && <p>Error: {error}</p>}
                 </div>
