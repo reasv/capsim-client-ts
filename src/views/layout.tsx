@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 import {
   Activity,
   ArrowUpRight,
@@ -37,6 +37,11 @@ import { CardsMetric } from "@/components/ui/metric"
 import { BarchartCard } from "@/components/ui/barchart"
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const location = useLocation()
+
+  const getLinkClass = (path: string) => {
+    return location.pathname === path ? 'text-foreground' : 'text-muted-foreground';
+  };
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -46,17 +51,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className="sr-only">Capsim</span>
           </Link>
           <Link
             to="/"
-            className="text-foreground transition-colors hover:text-foreground"
+            className={`${getLinkClass("/")} transition-colors hover:text-foreground`}
           >
             Dashboard
           </Link>
           <Link
             to="/admin"
-            className="text-muted-foreground transition-colors hover:text-foreground"
+            className={`${getLinkClass("/admin")} transition-colors hover:text-foreground`}
           >
             Admin
           </Link>
