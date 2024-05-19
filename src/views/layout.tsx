@@ -45,9 +45,8 @@ import {
 } from "@/components/ui/table"
 import { CardsMetric } from "@/components/ui/metric"
 import { BarchartCard } from "@/components/ui/barchart"
-import { PortfolioForm } from "./portfolioForm"
 
-export function Dashboard() {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -171,7 +170,7 @@ export function Dashboard() {
       </header>
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div>
-          <PortfolioForm></PortfolioForm>
+        {children}
         </div>
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
           
