@@ -1,7 +1,6 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from "@/components/theme-provider"
 
-
 import './index.css'
 import { Layout } from './views/layout'
 import { PortfolioForm } from './views/portfolioForm'
