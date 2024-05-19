@@ -96,12 +96,13 @@ export function NumberInput(
 }
 
 export function TextInput(
-  {id, label, value, maxLength, onNewValue}:
+  {id, label, value, maxLength, type, onNewValue}:
   {
     id: string,
     label: string,
     value: string,
     maxLength: number,
+    type?: string,
     onNewValue: (value: string) => void
   }
 ) {
@@ -114,7 +115,7 @@ export function TextInput(
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5 mt-2">
       <Label htmlFor={id}>{label}</Label>
-      <Input type="text" id={id} value={value} maxLength={maxLength} onInput={onInput}/>
+      <Input type={type ? type : "text"} id={id} value={value} maxLength={maxLength} onInput={onInput}/>
     </div>
   )
 }
