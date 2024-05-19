@@ -36,7 +36,7 @@ export function ChartCard(
   };
   
   return (
-    <Card>
+    <Card className="mt-4">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>
