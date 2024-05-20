@@ -2,7 +2,7 @@
 Web UI Client for [capsim](https://github.com/reasv/capsim)
 
 ## Bun
-This project requires bun https://bun.sh/. It's not guaranteed to work with Node.js/NPM or yarn.
+This project requires bun https://bun.sh/. It's not guaranteed to work with Node.js/NPM or yarn, although it probably will.
 
 ## Running
 
@@ -28,6 +28,22 @@ Then install our dependencies:
 Finally, run the dev server to test the web app:
 
 `bun run dev`
+
+#### Troubleshooting
+If you encounter issues with `bun run dev`, typically on Windows, you can try running this project using node.js and NPM.
+
+##### Installing node.js
+You can skip this step if you already have npm and node.js
+
+Find node.js/npm installation instructions for your platform here:
+https://nodejs.org/en/download/prebuilt-installer
+
+#### Running with NPM
+
+```
+npm install
+npm run dev
+```
 
 # Notes and attribution
 This project is built on React + Typescript + Vite + Tailwindcss.
