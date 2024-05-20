@@ -27,7 +27,7 @@ export function AdminDashboard({adminPassword}: {adminPassword: string}) {
                 {updateTicker.error && <p>Error: {updateTicker.error}</p>}
                 {updateTicker.success && <p>Success!</p>}
             </div>
-            <SelectAsset setStatus={setDeleteInputTicker}/>
+            <SelectAsset initialTicker="VTI" setStatus={setDeleteInputTicker}/>
             <Button className="ml-4" onClick={() => {if (deleteInputTicker.length > 0) deleteTicker.deleteTicker(deleteInputTicker)}}>Delete Ticker</Button>
             <div className="mt-4 mb-5">
                 {deleteTicker.error && <p>Error: {deleteTicker.error}</p>}
