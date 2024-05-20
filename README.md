@@ -9,7 +9,9 @@ This project requires bun https://bun.sh/. It's not guaranteed to work with Node
 ### Prerequisites
 Before proceeding, ensure you have a [capsim](https://github.com/reasv/capsim) API server running.
 
-Create a file called `.env` following the syntax in `.env.example`, setting `VITE_REACT_APP_API_URL=http://127.0.0.1:5000`
+Copy the `.env.example` file and rename it to just `.env`.
+
+It will should contain `VITE_REACT_APP_API_URL=http://127.0.0.1:5000`
 
 Adjust the URL if your API server runs on a different host/port.
 
