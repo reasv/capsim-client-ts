@@ -3,8 +3,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 import './index.css'
 import { Layout } from './views/layout'
-import { PortfolioForm } from './views/portfolioForm'
 import { AuthCheck } from './views/authCheck'
+import { Dashboard } from './views/mainDashboard'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             path="/"
             element={
               <Layout>
-                <PortfolioForm />
+                <Dashboard />
               </Layout>
             }
           />

@@ -9,7 +9,7 @@ import { ChartCard } from "@/components/portfolio/chart"
 import { DateSlider } from "@/components/portfolio/dateSlider"
 import { TextInput } from "@/components/portfolio/textInput"
 
-export function PortfolioForm() {
+export function PortfolioForm({portfolio_id}: {portfolio_id: string}) {
   const [asset, setAsset] = React.useState<string>("VTI")
   const [portfolioLabel, setPortfolioLabel] = React.useState<string>("My Portfolio")
   const [initialInvestment, setInitialInvestment] = React.useState<number>(1000000)
@@ -49,11 +49,11 @@ export function PortfolioForm() {
   return (
     <div>
       <SelectAsset setStatus={setAsset}/>
-      <TextInput id="portfolio_label" label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
-      <NumberInput id="initial_investment" label={`Initial Investment`} value={initialInvestment} onNewValue={setInitialInvestment} />
-      <NumberInput id="dividend_tax_rate" maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
-      <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
-      <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
+      <TextInput id={`${portfolio_id}-portfolio-label`} label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
+      <NumberInput id={`${portfolio_id}-initial_investment`} label={`Initial Investment`} value={initialInvestment} onNewValue={setInitialInvestment} />
+      <NumberInput id={`${portfolio_id}-dividend_tax_rate`} maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
+      <NumberInput id={`${portfolio_id}-capital_gains_tax_rate`} maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
+      <NumberInput id={`${portfolio_id}-yearly_withdrawal_rate`} maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
       <Button className="mt-5 mb-5" onClick={() => {
         simulatePortfolios([requestData])
       }}>Run Simulation</Button>
@@ -66,10 +66,10 @@ export function PortfolioForm() {
             simulatePortfolios([{...requestData, start_date: start_date}])
             setStartDate(start_date)
           }} />
-          <ChartCard syncId="port1" round={true} title={"Price"} description="Price over time of the underlying asset(s), expressed in % of initial price" field_name="price" portfolioResult={results[0]} />
-          <ChartCard syncId="port1" round={false} title={"Inflation Index"} description="A measure of inflation" field_name="cpi" portfolioResult={results[0]} />
-          <ChartCard syncId="port1" round={true} title={"Net worth"} description="Total value of your portfolio over time, adjusted for inflation" field_name="infl. adj. portfolio value" portfolioResult={results[0]} />
-          <ChartCard syncId="port1" round={true} title={"Monthly Withdrawals"} description="Amount you withdraw from your portfolio *per month*, adjusted for inflation" field_name="infl. adj. monthly income" yearly={true} portfolioResult={results[0]} />
+          <ChartCard syncId={`${portfolio_id}-port1`} round={true} title={"Price"} description="Price over time of the underlying asset(s), expressed in % of initial price" field_name="price" portfolioResult={results[0]} />
+          <ChartCard syncId={`${portfolio_id}-port1`} round={false} title={"Inflation Index"} description="A measure of inflation" field_name="cpi" portfolioResult={results[0]} />
+          <ChartCard syncId={`${portfolio_id}-port1`} round={true} title={"Net worth"} description="Total value of your portfolio over time, adjusted for inflation" field_name="infl. adj. portfolio value" portfolioResult={results[0]} />
+          <ChartCard syncId={`${portfolio_id}-port1`} round={true} title={"Monthly Withdrawals"} description="Amount you withdraw from your portfolio *per month*, adjusted for inflation" field_name="infl. adj. monthly income" yearly={true} portfolioResult={results[0]} />
         </div>
       )}
     </div>
