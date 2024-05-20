@@ -12,7 +12,7 @@ export function Dashboard() {
             </CardDescription>
         </CardHeader>
         <CardContent className="pb-4">
-            <PortfolioForm portfolio_id='portfolio-a' />
+            <PortfolioForm portfolio_id='pa' />
         </CardContent>
     </Card>
     <Card className="mt-4">
@@ -23,7 +23,7 @@ export function Dashboard() {
         </CardDescription>
     </CardHeader>
     <CardContent className="pb-4">
-        <PortfolioForm portfolio_id='portfolio-b' />
+        <PortfolioForm portfolio_id='pb' />
     </CardContent>
     </Card>
 </div>

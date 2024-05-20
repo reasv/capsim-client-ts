@@ -29,20 +29,26 @@ type Status = {
   label: string
 }
 
-export function SelectAsset({ setStatus }: {setStatus: (status: string) => void}){
+export function SelectAsset({ initialTicker, setStatus }: {initialTicker: string, setStatus: (status: string) => void}){
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     {
-      value: "VTI",
-      label: "VTI",
+      value: initialTicker,
+      label: initialTicker,
     }
   )
 
   function handleStatusChange(status: Status | null) {
     setSelectedStatus(status)
-    setStatus(status ? status.value : "VTI")
+    setStatus(status ? status.value : initialTicker)
   }
+  React.useEffect(() => {
+    setSelectedStatus({
+      value: initialTicker,
+      label: initialTicker,
+    })
+  }, [initialTicker])
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>

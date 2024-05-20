@@ -7,23 +7,22 @@ import { Button } from "@/components/ui/button"
 import { PortfolioParams, usePortfolioBacktest } from "@/hooks/backtestAPI"
 import { ChartCard } from "@/components/portfolio/chart"
 import { DateSlider } from "@/components/portfolio/dateSlider"
-import { TextInput } from "@/components/portfolio/textInput"
 
 export function PortfolioForm({portfolio_id, setPortfolioParams}: {portfolio_id: string, setPortfolioParams?: (params: PortfolioParams) => void}) {
   const [asset, setAsset] = React.useState<string>("VTI")
-  const [portfolioLabel, setPortfolioLabel] = React.useState<string>("My Portfolio")
+  // const [portfolioLabel, setPortfolioLabel] = React.useState<string>("My Portfolio")
   const [initialInvestment, setInitialInvestment] = React.useState<number>(1000000)
   const [dividendTaxRate, setDividendTaxRate] = React.useState<number>(26)
   const [capitalGainsTaxRate, setCapitalGainsTaxRate] = React.useState<number>(26)
   const [yearlyWithdrawalRate, setYearlyWithdrawalRate] = React.useState<number>(4)
   // Set label based on asset ticker
-  React.useEffect(() => {
-    // Only do this if the user hasn't changed the label
-    // It needs to match the regex /^[0-9]+% [A-Z]+ Portfolio$/
-    if (/^[0-9]+% [A-Z]+ Portfolio$/.test(portfolioLabel) || portfolioLabel === "My Portfolio") {
-      setPortfolioLabel(`100% ${asset} Portfolio`)
-    }
-  }, [asset])
+  // React.useEffect(() => {
+  //   // Only do this if the user hasn't changed the label
+  //   // It needs to match the regex /^[0-9]+% [A-Z]+ Portfolio$/
+  //   if (/^[0-9]+% [A-Z]+ Portfolio$/.test(portfolioLabel) || portfolioLabel === "My Portfolio") {
+  //     setPortfolioLabel(`100% ${asset} Portfolio`)
+  //   }
+  // }, [asset])
 
   const [startDate, setStartDate] = React.useState<string | null>(null)
   const requestData: PortfolioParams = useMemo(() => ({
@@ -33,8 +32,8 @@ export function PortfolioForm({portfolio_id, setPortfolioParams}: {portfolio_id:
     dividend_tax: dividendTaxRate / 100,
     capital_gains_tax: capitalGainsTaxRate / 100,
     yearly_sale_percentage: yearlyWithdrawalRate / 100,
-    name: portfolioLabel,
-  }), [asset, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, portfolioLabel, startDate])
+    name: portfolio_id //portfolioLabel,
+  }), [asset, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, startDate])
   
   // Reset start date when asset changes
   useEffect(() => {
@@ -49,10 +48,40 @@ export function PortfolioForm({portfolio_id, setPortfolioParams}: {portfolio_id:
       setPortfolioParams({...requestData, start_date: results[0].monthly_results ? results[0].monthly_results[0]["timestamp"] : null})
     }
   }, [results])
+  const [readQueryString, setReadQueryString] = React.useState<boolean>(false)
+  // Save all the parameters in the query string
+  React.useEffect(() => {
+    // Don't save the query string on page load
+    if (!readQueryString) {
+      return
+    }
+    // Preserve existing query parameters
+    const params = new URLSearchParams(window.location.search)
+    // Use portfolio_id to distinguish between different portfolios
+    params.set(`${portfolio_id}-ticker`, asset)
+    params.set(`${portfolio_id}-initial`, initialInvestment.toString())
+    params.set(`${portfolio_id}-divtax`, dividendTaxRate.toString())
+    params.set(`${portfolio_id}-captax`, capitalGainsTaxRate.toString())
+    params.set(`${portfolio_id}-ysell`, yearlyWithdrawalRate.toString())
+    // params.set(`${portfolio_id}-portfolio_label`, portfolioLabel)
+    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`)
+  }, [asset, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, readQueryString])
+
+  // On page load, read the query string and set the values
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    setAsset(params.get(`${portfolio_id}-ticker`) || asset)
+    setInitialInvestment(parseFloat(params.get(`${portfolio_id}-initial`) || initialInvestment.toString()))
+    setDividendTaxRate(parseFloat(params.get(`${portfolio_id}-divtax`) || dividendTaxRate.toString()))
+    setCapitalGainsTaxRate(parseFloat(params.get(`${portfolio_id}-captax`) || capitalGainsTaxRate.toString()))
+    setYearlyWithdrawalRate(parseFloat(params.get(`${portfolio_id}-ysell`) || yearlyWithdrawalRate.toString()))
+    setReadQueryString(true)
+    // setPortfolioLabel(params.get(`${portfolio_id}-portfolio_label`) || portfolioLabel)
+  }, [])
 
   return (
     <div>
-      <SelectAsset setStatus={setAsset}/>
+      <SelectAsset initialTicker={asset} setStatus={setAsset}/>
       {
         //<TextInput id={`${portfolio_id}-portfolio-label`} label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
       }
