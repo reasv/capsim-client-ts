@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 
 export function Dashboard() {
     return (
-        <div>
+        <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-2">
     <Card className="mt-4">
         <CardHeader>
             <CardTitle>Portfolio A</CardTitle>
@@ -24,17 +24,6 @@ export function Dashboard() {
     </CardHeader>
     <CardContent className="pb-4">
         <PortfolioForm portfolio_id='portfolio-b' />
-    </CardContent>
-    </Card>
-    <Card className="mt-4">
-    <CardHeader>
-        <CardTitle>Compare</CardTitle>
-        <CardDescription>
-            Compare your portfolios
-        </CardDescription>
-    </CardHeader>
-    <CardContent className="pb-4">
-        <div>Comparison goes here</div>
     </CardContent>
     </Card>
 </div>
