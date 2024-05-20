@@ -11,7 +11,7 @@ Before proceeding, ensure you have a [capsim](https://github.com/reasv/capsim) A
 
 Copy the `.env.example` file and rename it to just `.env`.
 
-It will should contain `VITE_REACT_APP_API_URL=http://127.0.0.1:5000`
+It should contain `VITE_REACT_APP_API_URL=http://127.0.0.1:5000`
 
 Adjust the URL if your API server runs on a different host/port.
 
