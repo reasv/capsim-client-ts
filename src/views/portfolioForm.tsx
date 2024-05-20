@@ -1,5 +1,5 @@
 "use client"
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo } from "react"
 import { SelectAsset } from "@/components/portfolio/selectAsset"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -25,22 +25,27 @@ export function PortfolioForm() {
     }
   }, [asset])
 
+  const [startDate, setStartDate] = React.useState<string | null>(null)
   const requestData: PortfolioParams = useMemo(() => ({
     ticker: asset,
-    start_date: null,
+    start_date: startDate,
     initial_investment: initialInvestment,
     dividend_tax: dividendTaxRate / 100,
     capital_gains_tax: capitalGainsTaxRate / 100,
     yearly_sale_percentage: yearlyWithdrawalRate / 100,
     name: portfolioLabel,
-  }), [asset, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, portfolioLabel])
+  }), [asset, initialInvestment, dividendTaxRate, capitalGainsTaxRate, yearlyWithdrawalRate, portfolioLabel, startDate])
   
+  // Reset start date when asset changes
+  useEffect(() => {
+    setStartDate(null)
+  }, [asset])
+
   const { simulatePortfolios, results, loading, error } = usePortfolioBacktest()
   // print results to console
   React.useEffect(() => {
     console.log(results)
   }, [results])
-
   return (
     <div>
       <SelectAsset setStatus={setAsset}/>
@@ -49,13 +54,17 @@ export function PortfolioForm() {
       <NumberInput id="dividend_tax_rate" maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
       <NumberInput id="capital_gains_tax_rate" maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
       <NumberInput id="yearly_withdrawal_rate" maxValue={100} label={`Yearly Withdrawal Rate (%)`} value={yearlyWithdrawalRate} onNewValue={setYearlyWithdrawalRate} />
-      <Button className="mt-5 mb-5" onClick={() => simulatePortfolios([requestData])}>Run Simulation</Button>
+      <Button className="mt-5 mb-5" onClick={() => {
+        simulatePortfolios([requestData])
+      }}>Run Simulation</Button>
       {loading && <p className="mb-5">Loading...</p>}
       {error && <p className="mb-5">Error: {error}</p>}
       {results && results[0] && (
         <div>
           <DateSlider id={"port_date_slider"} portfolio={results[0]} yearly={false} onCommit={(date) => {
-            simulatePortfolios([{...requestData, start_date: date.toISOString().split("T")[0]}])
+            const start_date = date.toISOString().split("T")[0]
+            simulatePortfolios([{...requestData, start_date: start_date}])
+            setStartDate(start_date)
           }} />
           <ChartCard syncId="port1" round={true} title={"Price"} description="Price over time of the underlying asset(s), expressed in % of initial price" field_name="price" portfolioResult={results[0]} />
           <ChartCard syncId="port1" round={false} title={"Inflation Index"} description="A measure of inflation" field_name="cpi" portfolioResult={results[0]} />
