@@ -26,5 +26,16 @@ export function Dashboard() {
         <PortfolioForm portfolio_id='portfolio-b' />
     </CardContent>
     </Card>
+    <Card className="mt-4">
+    <CardHeader>
+        <CardTitle>Compare</CardTitle>
+        <CardDescription>
+            Compare your portfolios
+        </CardDescription>
+    </CardHeader>
+    <CardContent className="pb-4">
+        <div>Comparison goes here</div>
+    </CardContent>
+    </Card>
 </div>
 )}
