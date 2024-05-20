@@ -9,6 +9,28 @@ import {
 import { useTheme } from "../theme-provider"
 import { PortfolioResult } from "@/hooks/backtestAPI"
 
+function formatNumberWithApostrophe(num: number, round: boolean): string {
+  // Convert the number to a string and split it into the integer and decimal parts
+  const [integerPart, decimalPart] = num.toString().split('.');
+  
+  // Reverse the integer part for easier insertion of apostrophes
+  const reversedInteger = integerPart.split('').reverse();
+  
+  // Insert an apostrophe every three digits
+  const formattedReversedInteger = reversedInteger.reduce((acc, digit, index) => {
+      if (index > 0 && index % 3 === 0) {
+          acc.push("'");
+      }
+      acc.push(digit);
+      return acc;
+  }, [] as string[]);
+  
+  // Reverse the integer part back to its original order
+  const formattedInteger = formattedReversedInteger.reverse().join('');
+  
+  // Combine the integer and decimal parts if there's a decimal part
+  return decimalPart && !round ? `${formattedInteger}.${decimalPart}` : formattedInteger;
+}
 
 export function ChartCard(
     {title, description, portfolioResult, yearly, field_name, round, syncId}:
@@ -68,7 +90,7 @@ export function ChartCard(
                                 {title}
                             </span>
                             <span className="font-bold ">
-                              {(payload[0].value as number).toFixed(round ? 0 : 2)}
+                              {formatNumberWithApostrophe(payload[0].value as number, round)}
                             </span>
                           </div>
                           <div className="flex flex-col">
