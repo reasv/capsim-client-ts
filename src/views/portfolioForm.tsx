@@ -53,7 +53,9 @@ export function PortfolioForm({portfolio_id, setPortfolioParams}: {portfolio_id:
   return (
     <div>
       <SelectAsset setStatus={setAsset}/>
-      <TextInput id={`${portfolio_id}-portfolio-label`} label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
+      {
+        //<TextInput id={`${portfolio_id}-portfolio-label`} label="Portfolio Label" value={portfolioLabel} maxLength={64} onNewValue={setPortfolioLabel} />
+      }
       <NumberInput id={`${portfolio_id}-initial_investment`} label={`Initial Investment`} value={initialInvestment} onNewValue={setInitialInvestment} />
       <NumberInput id={`${portfolio_id}-dividend_tax_rate`} maxValue={100} label={`Dividend Tax Rate (%)`} value={dividendTaxRate} onNewValue={setDividendTaxRate} />
       <NumberInput id={`${portfolio_id}-capital_gains_tax_rate`} maxValue={100} label={`Capital Gains Tax Rate (%)`} value={capitalGainsTaxRate} onNewValue={setCapitalGainsTaxRate} />
